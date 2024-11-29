@@ -4,28 +4,20 @@ input, textarea {
   display:inline-block;
   font-family:arial;
   margin: 5px 10px 5px 40px;
-  padding: 8px 12px 8px 12px;
+  padding: 15px 12px 8px 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  width: 90%;
+  width: 60%;
   font-size: small;
 }
-    
-div {
-  margin-left: auto;
-  margin-right: auto;
-  width: 60%;  
-}
-    
-h1 { text-align: center; }    
 
 input[type=submit] {
-  padding:5px 15px; 
-  background:#ccc; 
+  padding: 10px 15px; 
   border:0 none;
   cursor:pointer;
   border-radius: 5px; 
+  background-color: #5e43dd;
 }
   
 input[type=submit]:hover {
@@ -41,7 +33,13 @@ input[type=submit]:hover {
     
 html{ height:100%; }
 
-body{ min-height:100%; padding:0; margin:0; position:relative; }    
+body{ 
+  font-family: "Host Grotesk", sans-serif;
+  min-height:100%;
+  padding:0;
+  margin:0;
+  position:relative;
+}    
 
 footer {
   position: absolute;
@@ -52,8 +50,36 @@ footer {
   padding: 10px;
 }
 
+.form {
+  padding: 0;
+  padding-top: 1vw;
+  text-align: center;
+}
+
+p {
+  text-align: left;
+  font-size: 1.5vw;
+  padding-left: 23%;
+}
+
+::placeholder {
+  color: #c0c0c0;
+}
+
+.btn {
+  color: white;
+}
+
+.btn-primary btn {
+  color: #5e43dd
+}
+
+.btn-link {
+  text-decoration: none;
+}
+
 .button {
-  background-color: #5979ee; /* Green */
+  background-color: #5979ee;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -61,4 +87,91 @@ footer {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.navbar-brand img {
+  height: 50px;
+  margin-right: 20px;
+}
+
+.card {
+  box-shadow: 10px 10px;
+  color: #c0c0c0;
+}
+
+.card-body {
+  text-align: left;
+  
+}
+
+.card-header {
+  color: #5e43dd;
+  font-weight: bold;
+}
+
+.browse-more {
+  padding-top: 10%;
+  text-align: right;
+}
+
+.button {
+  padding: 5%;
+  color: #5e43dd;
+  background-color: white;
+  border-color: #5e43dd;
+  border-radius: 5%;
+}
+
+.container {
+  display: flex; 
+  justify-content: space-between; 
+  flex-wrap: row; 
+}
+
+.child1 {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  gap: 1rem;
+}
+
+.header {
+  text-align: left;
+  font-size: 2vw;
+  padding-left: 23%;
+}
+
+.child2 {
+  width: 100%;
+  padding: 10%;
+  text-align: center;
+  object-fit: contain;
+  object-position: center;
+}
+
+.child2 img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5%;
+}
+
+.hero {
+  padding: 5%;
+  padding-bottom: 10%;
+  text-align: left;
+  width: 100%;
+  background: url("./images/hero.png");
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.hero h1 {
+  padding-top: 2%;
 }
