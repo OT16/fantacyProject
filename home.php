@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'connect.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
@@ -7,11 +8,19 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-// Optionally store the username for further use
 $username = $_SESSION['username'];
+
+$sql = "SELECT fullName FROM users WHERE username = '$username'";
+$result = mysqli_query($conn, $sql);
+
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    $fullName = $row['fullName'];
+} else {
+    $fullName = "Guest";
+}
 ?>
 
-<?php
 ob_start();  // Start output buffering
 
 // Replace or insert any PHP content in the HTML file
