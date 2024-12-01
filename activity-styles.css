@@ -41,15 +41,6 @@ body{
   position:relative;
 }    
 
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
-  color: WhiteSmoke;
-  padding: 10px;
-}
-
 .form {
   padding: 0;
   padding-top: 1vw;
@@ -71,7 +62,7 @@ p {
 }
 
 .btn-primary btn {
-  color: #5e43dd
+  color: #5e43dd;
 }
 
 .btn-link {
@@ -79,7 +70,7 @@ p {
 }
 
 .button {
-  background-color: #5979ee;
+  background-color: #5e43dd;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -106,7 +97,8 @@ p {
 
 .card-body {
   text-align: left;
-  
+  padding: auto;
+  color: black;
 }
 
 .card-header {
@@ -115,7 +107,8 @@ p {
 }
 
 .browse-more {
-  padding-top: 10%;
+  padding-top: 5%;
+  padding-right: 10%;
   text-align: right;
 }
 
@@ -131,6 +124,14 @@ p {
   display: flex; 
   justify-content: space-between; 
   flex-wrap: row; 
+  padding: 0;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.category {
+  padding-left: 10%;
+  padding-bottom: 10px;
 }
 
 .child1 {
@@ -163,15 +164,27 @@ p {
 }
 
 .hero {
-  padding: 5%;
-  padding-bottom: 10%;
+  padding: 3%;
+  margin-bottom: 5%;
   text-align: left;
   width: 100%;
   background: url("./images/hero.png");
   background-repeat: no-repeat;
   color: white;
+  background-size: cover;
 }
 
 .hero h1 {
   padding-top: 2%;
+}
+
+.profile-container {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.select {
+  text-align: right;
+  margin-top: 10%;
 }
