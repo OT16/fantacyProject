@@ -2,34 +2,42 @@
 session_start();
 include 'connect.php';
 
-// Check if the user is logged in
 if (!isset($_SESSION['username'])) {
     header("Location: login.html");
     exit();
 }
 
 $username = $_SESSION['username'];
+$sqlUser = "SELECT userID, fullName FROM users WHERE username = '$username'";
+$resultUser = mysqli_query($conn, $sqlUser);
 
-$sql = "SELECT fullName FROM users WHERE username = '$username'";
-$result = mysqli_query($conn, $sql);
-
-if ($result && mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $fullName = $row['fullName'];
-} else {
-    $fullName = "Guest";
+if ($resultUser && mysqli_num_rows($resultUser) > 0) {
+    $rowUser = mysqli_fetch_assoc($resultUser);
+    $userID = $rowUser['userID'];
+    $fullName = $rowUser['fullName'];
 }
-?>
 
-ob_start();  // Start output buffering
+$sqlUserLeagues = "
+    SELECT 
+        leagueID, 
+        leagueName, 
+        leagueType, 
+        maxTeams, 
+        draftDate 
+    FROM leagues
+    WHERE commissioner = '$userID'";
+$resultUserLeagues = mysqli_query($conn, $sqlUserLeagues);
 
-// Replace or insert any PHP content in the HTML file
-include "home.html"; 
+$userLeagues = [];
+if ($resultUserLeagues && mysqli_num_rows($resultUserLeagues) > 0) {
+    while ($rowLeague = mysqli_fetch_assoc($resultUserLeagues)) {
+        $userLeagues[] = $rowLeague;
+    }
+}
 
-$html_content = ob_get_clean(); // Get the content of home.html with PHP variables
+ob_start();
+include "home.html";
+$html_content = ob_get_clean();
 
-// Output the modified content
 echo $html_content;
 ?>
-
-
