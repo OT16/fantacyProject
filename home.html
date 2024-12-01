@@ -51,7 +51,8 @@
             <p>Maximum number of teams: <?php echo htmlspecialchars($league['maxTeams']); ?></p>
             <p>Draft date: <?php echo htmlspecialchars($league['draftDate']); ?></p>
             <div class="select">
-              <button class="btn btn-primary">Manage</button>
+              <a href="league.html?leagueID=<?php echo urlencode($league['leagueID']); ?>" class="btn btn-primary">Manage</a>
+
             </div>
           </div>
         </div>
@@ -60,6 +61,10 @@
         <p class="text-center">You are not managing any leagues at the moment.</p>
         <?php endif; ?>
     </div>
+    
+    <div class="browse-more">
+      <a href="league.html?leagueID=<?php echo urlencode($league['leagueID']); ?>" class="btn btn-primary">Browse</a>
+  </div>
   </section>
 
 
