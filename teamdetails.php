@@ -1,4 +1,8 @@
 <?php
+
+//Test this with: http://localhost/fantacyProject/teamdetails.php?teamID=1
+
+
 // Connect to the database
 
 include ("connect.php");
