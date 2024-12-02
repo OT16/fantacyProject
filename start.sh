@@ -33,6 +33,12 @@ else
     echo "gcloud is already installed."
 fi
 
+#Init gcloud
+gcloud auth login
+
+#Config Project
+gcloud config set project intro-to-databases-443419
+
 # Open SSH Tunnel to the VM
 echo "Opening SSH tunnel to VM..."
 gcloud compute ssh instance-vm --zone=us-central1-a -- -L 3306:127.0.0.1:3306 -N -t &
