@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connect.php';
+include('connect.php');
 
 if (!isset($_SESSION['username'])) { 
     header("Location: login.html");
@@ -44,6 +44,9 @@ if ($resultTeams && mysqli_num_rows($resultTeams) > 0) {
     while ($rowTeam = mysqli_fetch_assoc($resultTeams)) {
         $teams[] = $rowTeam;
     }
+} else {
+    echo "League not found.";
+    exit();
 }
 
 // matches
@@ -55,6 +58,9 @@ if ($resultMatches && mysqli_num_rows($resultMatches) > 0) {
     while ($rowMatch = mysqli_fetch_assoc($resultMatches)) {
         $matches[] = $rowMatch;
     }
+} else {
+    echo "League not found.";
+    exit();
 }
 
 include ("navbar.html");
@@ -144,8 +150,6 @@ include ("navbar.html");
         <p class="text-center">No matches yet.</p>
         <?php endif; ?>
     </section>
-
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
