@@ -129,7 +129,7 @@ if (isset($_GET['leagueID'])) {
                 </div>
                 <div class="card-footer text-muted">
                   <div class="select">
-                    <a href="league.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">Manage</a>
+                    <a href="league.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">Details</a>
                   </div>
                 </div>
               </div>
@@ -140,6 +140,10 @@ if (isset($_GET['leagueID'])) {
         <?php endif; ?>
       </div>
     </div>
+
+    <div class="browse-more">
+            <a href="leaguemanagement.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">Manage League</a>
+        </div>
   </section>
 
   <section id="create-league" class="py-5">
@@ -180,8 +184,11 @@ if (isset($_GET['leagueID'])) {
 
             </div>
         </div>
-      </div>
-  </section>
+    </div>
+</section>
+
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

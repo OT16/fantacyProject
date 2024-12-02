@@ -59,6 +59,9 @@ include ("navbar.html");
             <p><strong>Total Points:</strong> <?php echo htmlspecialchars($team_data['totalPoints']); ?></p>
             <p><strong>Ranking:</strong> <?php echo htmlspecialchars($team_data['ranking']); ?></p>
             <p><strong>Status:</strong> <?php echo htmlspecialchars($team_data['status']); ?></p>
+            <div class="select">
+                <a href="tradedetails.php" class="btn btn-primary">View Trades</a>
+            </div>
         </div>
         <div class="main-content">
             <h3>Players</h3>

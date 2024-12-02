@@ -72,6 +72,20 @@ if (!empty($teamIDs)) {
         }
     }
 }
+
+$sqlAvailablePlayers = "
+    SELECT playerID, fullName, sport, position, realTeam, fantasyPoints, availabilityStatus 
+    FROM players 
+    WHERE availabilityStatus = 'A'";
+$resultAvailablePlayers = mysqli_query($conn, $sqlAvailablePlayers);
+
+$availablePlayers = [];
+if ($resultAvailablePlayers && mysqli_num_rows($resultAvailablePlayers) > 0) {
+    while ($rowPlayer = mysqli_fetch_assoc($resultAvailablePlayers)) {
+        $availablePlayers[] = $rowPlayer;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +99,27 @@ if (!empty($teamIDs)) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+  <!-- Navigation Bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+		  <a class="navbar-brand" href="#">
+			<img src="./images/logo.png" style="height: 50px;">
+		  </a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ms-auto">
+			  <li class="nav-item">
+				<a class="nav-link active" href="home.php">Home</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" href="profile.php">Profile</a>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	  </nav>
 
     <div class="hero">
         <h1><?php echo htmlspecialchars($league['leagueName']); ?></h1>
@@ -109,7 +144,7 @@ if (!empty($teamIDs)) {
                             </div>
                             <div class="card-footer text-muted">
                                 <div class="select">
-                                    <a href="league.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">See More</a>
+                                    <a href="teamdetails.php?teamID=<?php echo $team['teamID']; ?>" class="btn btn-primary">See More</a>
                                 </div>
                             </div>
                         </div>
@@ -118,6 +153,8 @@ if (!empty($teamIDs)) {
         <?php else: ?>
             <p class="text-center">No teams in this league.</p>
         <?php endif; ?>
+
+        
     </section>
 
     <section id="contests" class="py-5">
@@ -161,6 +198,39 @@ if (!empty($teamIDs)) {
             </div>
         </div>
     </section>
+
+    <section id="waiver-pool" class="py-5">
+    <h2 class="category">Waiver Pool</h2>
+
+    <?php if (!empty($availablePlayers)): ?>
+        <div class="container">
+            <div class="row">
+                <?php foreach ($availablePlayers as $player): ?>
+                    <div class="col-md-4 col-lg-3 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Player: <?php echo htmlspecialchars($player['fullName']); ?></h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Sport:</strong> <?php echo htmlspecialchars($player['sport']); ?></p>
+                                <p><strong>Position:</strong> <?php echo htmlspecialchars($player['position']); ?></p>
+                                <p><strong>Real Team:</strong> <?php echo htmlspecialchars($player['realTeam']); ?></p>
+                                <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player['fantasyPoints']); ?></p>
+                                <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availabilityStatus']); ?></p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="claimPlayer.php?playerID=<?php echo $player['playerID']; ?>" class="btn btn-primary">Submit Claim</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php else: ?>
+        <p class="text-center">No players available in the waiver pool.</p>
+    <?php endif; ?>
+</section>
+
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
