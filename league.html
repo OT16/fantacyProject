@@ -37,25 +37,25 @@
 
     <section id="teams" class="py-5">
         <h2 class="category">Teams</h2>
-        <div class="container">
+        
             <?php if (!empty($userTeams)): ?>
-            <?php foreach ($userTeams as $team): ?>
-            <div class="card" style="width: 25%;">
-            <div class="card-header">
-                <?php echo htmlspecialchars($team['teamName']); ?>
-            </div>
-            <div class="card-body">
-                <p>Owner: <?php echo htmlspecialchars($league['leagueID']); ?></p>
-                <p>LeagueID: <?php echo htmlspecialchars($league['draftDate']); ?></p>
-
-                <div class="select">
-                    <a href="league.html?leagueID=<?php echo urlencode($league['leagueID']); ?>" class="btn btn-primary">See More</a>
+                <div class="container">
+                    <?php foreach ($userTeams as $team): ?>
+                            <div class="card" style="width: 25%;">
+                                <div class="card-header">
+                                    <h5>
+                                        Team ID: <?php echo htmlspecialchars($team['teamID']); ?>
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    
+                                    <h5 class="card-title"><?php echo htmlspecialchars($team['teamName']); ?></h5>
+                                </div>
+                            </div>
+                    <?php endforeach; ?>
                 </div>
-            </div>
-            </div>
-            <?php endforeach; ?>
             <?php else: ?>
-            <p class="text-center">This league does not have any teams at the moment.</p>
+                <p class="text-center">No teams in this league.</p>
             <?php endif; ?>
         </div>
         

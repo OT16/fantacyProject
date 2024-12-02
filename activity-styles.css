@@ -33,12 +33,13 @@ input[type=submit]:hover {
     
 html{ height:100%; }
 
-body{ 
+body { 
   font-family: "Host Grotesk", sans-serif;
   min-height:100%;
   padding:0;
   margin:0;
   position:relative;
+  padding-bottom: 8%;
 }    
 
 .form {
@@ -99,11 +100,24 @@ p {
   text-align: left;
   padding: auto;
   color: black;
+  height: 28vh;
 }
 
 .card-header {
   color: #5e43dd;
   font-weight: bold;
+  height: 5vh;
+}
+
+.card-body p {
+  font-size: 1rem;
+}
+
+.card-body-submit {
+  text-align: left;
+  padding: auto;
+  color: black;
+  padding-bottom: 5%;
 }
 
 .browse-more {
@@ -131,7 +145,7 @@ p {
 
 .category {
   padding-left: 10%;
-  padding-bottom: 10px;
+  padding-bottom: 3%;
 }
 
 .child1 {
@@ -185,6 +199,9 @@ p {
 }
 
 .select {
-  text-align: right;
-  margin-top: 10%;
+  text-align: center;
+}
+
+.form-section {
+  padding: 5%;
 }
