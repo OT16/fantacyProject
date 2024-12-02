@@ -1,41 +1,17 @@
-<?php
-// To use PDO to connect to a database, you need the following information:
-$servname = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fantasy_db";
-// database connection
-$conn = mysqli_connect($servname, $username, $password, $dbname);
-if(!$conn){
-echo "Connection failed";
+?php
+// Database connection details
+$servername = "127.0.0.1"; // Localhost because we're using an SSH tunnel
+$username = "root"; // Cloud SQL username
+$password = ""; // Cloud SQL password
+$dbname = "fantasy_db"; // Database name
+$port = 3306; // The port Cloud SQL proxy is listening on
+
+// Create connection using mysqli
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+session_start(); // Start session if not already started
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-
-// if ($conn) {
-//     // Fetch and display the current database name
-//     $db_query = $conn->query("SELECT DATABASE()");
-//     if ($db_query) {
-//         $db_name = $db_query->fetch_row()[0];
-//         echo "Connected to Database: " . $db_name . "<br>";
-//     } else {
-//         echo "Could not fetch database name.<br>";
-//     }
-
-//     // Fetch and display all tables in the database
-//     $tables_query = $conn->query("SHOW TABLES");
-//     if ($tables_query->num_rows > 0) {
-//         echo "Tables in Database:<br>";
-//         while ($row = $tables_query->fetch_row()) {
-//             echo "- " . $row[0] . "<br>";
-//         }
-//     } else {
-//         echo "No tables found in the database.";
-//     }
-// } else {
-//     echo "Connection failed";
-// }
-
-
-
-
-
 ?>
