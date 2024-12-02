@@ -9,21 +9,21 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
-
 $sql = "SELECT fullName FROM users WHERE username = '$username'";
 $result = mysqli_query($conn, $sql);
 
+// get
 if ($result && mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
     $fullName = $row['fullName'];
+	$email = $row['email'];
 }
 
-// Update
+// change
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $newFullName = mysqli_real_escape_string($conn, $_POST['fullName']);
     $newEmail = mysqli_real_escape_string($conn, $_POST['email']);
     $newOtherDetails = mysqli_real_escape_string($conn, $_POST['otherDetails']);
-
     $updateSql = "UPDATE users SET fullName = '$newFullName', email = '$newEmail' WHERE username = '$username'";
 }
 ?>
@@ -179,8 +179,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<h3 style="text-align: center;">Update Details</h3>
 			
 			<form class="form" action="profile.php" method="post">  
-				<input type="text" id="uname" name="fullName" placeholder="Full Name" value="" required>
-				<input type="email" id="email" name="email"  placeholder="Email" value="" required>
+				<input type="text" id="uname" name="fullName" placeholder="Full Name" required>
+				<input type="email" id="email" name="email"" placeholder="Email" required>
 				<input type="submit" value="Save changes" class="btn"/>
 			</form>
 		</div>

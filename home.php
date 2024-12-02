@@ -108,7 +108,6 @@ if (isset($_GET['leagueID'])) {
   </div>
 
   <section id="contests" class="py-5">
-
     <h2 class="category">
       Your Leagues
     </h2>
@@ -117,7 +116,7 @@ if (isset($_GET['leagueID'])) {
       <div class="row">
         <?php if (!empty($userLeagues)): ?>
           <?php foreach ($userLeagues as $league): ?>
-            <div class="col-md-4 col-lg-2 mb-4"> <!-- Adjust column size for 5 cards per row -->
+            <div class="col-md-4 col-lg-2 mb-4">
               <div class="card">
                 <div class="card-header">
                   <?php echo htmlspecialchars($league['leagueName']); ?>
@@ -141,7 +140,6 @@ if (isset($_GET['leagueID'])) {
         <?php endif; ?>
       </div>
     </div>
-
   </section>
 
   <section id="create-league" class="py-5">
@@ -182,11 +180,8 @@ if (isset($_GET['leagueID'])) {
 
             </div>
         </div>
-    </div>
-</section>
-
-
-
+      </div>
+  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

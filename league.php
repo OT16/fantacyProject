@@ -35,28 +35,43 @@ if ($resultLeague && mysqli_num_rows($resultLeague) > 0) {
     exit();
 }
 
-// teams
+// get all teams
 $sqlTeams = "SELECT * FROM teams WHERE leagueID = '$leagueID'";
 $resultTeams = mysqli_query($conn, $sqlTeams);
 
-$teams = [];
+$teamIDs = [];
 if ($resultTeams && mysqli_num_rows($resultTeams) > 0) {
     while ($rowTeam = mysqli_fetch_assoc($resultTeams)) {
         $teams[] = $rowTeam;
+        $teamIDs[] = $rowTeam['teamID'];
     }
 }
 
-// matches
-$sqlMatches = "SELECT * FROM matches WHERE leagueID = '$leagueID'";
-$resultMatches = mysqli_query($conn, $sqlMatches);
+if (!empty($teamIDs)) {
+    $teamIDsList = implode(',', array_map('intval', $teamIDs)); // Ensure safety with intval
 
-$matches = [];
-if ($resultMatches && mysqli_num_rows($resultMatches) > 0) {
-    while ($rowMatch = mysqli_fetch_assoc($resultMatches)) {
-        $matches[] = $rowMatch;
+    $sqlMatches = "
+    SELECT 
+        matches.*,
+        t1.teamName AS team1Name,
+        t2.teamName AS team2Name,
+        winnerTeams.teamName AS winnerTeamName
+    FROM matches
+        LEFT JOIN teams t1 ON matches.team1ID = t1.teamID
+        LEFT JOIN teams t2 ON matches.team2ID = t2.teamID
+        LEFT JOIN teams winnerTeams ON matches.winner = winnerTeams.teamID
+    WHERE matches.team1ID IN ($teamIDsList) 
+       OR matches.team2ID IN ($teamIDsList)";
+
+    $resultMatches = mysqli_query($conn, $sqlMatches);
+
+    $matches = [];
+    if ($resultMatches && mysqli_num_rows($resultMatches) > 0) {
+        while ($rowMatch = mysqli_fetch_assoc($resultMatches)) {
+            $matches[] = $rowMatch;
+        }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -126,44 +141,47 @@ if ($resultMatches && mysqli_num_rows($resultMatches) > 0) {
         <?php endif; ?>
     </section>
 
-    <section id="matches" class="py-5">
-    <h2 class="category">Matches</h2>
+    <section id="contests" class="py-5">
+    <h2 class="category">
+      Matches
+    </h2>
 
-    <?php if (!empty($matches)): ?>
-        <div class="container">
+    <div class="container">
+      <div class="row">
+        <?php if (!empty($matches)): ?>
             <?php foreach ($matches as $match): ?>
-                <div class="card my-3" style="width: 50%;">
-                    <div class="card-header">
-                        Match ID: <?php echo htmlspecialchars($match['matchID']); ?>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <p>Team 1: <?php echo htmlspecialchars($match['team1']); ?></p>
-                                <p>Score: <?php echo htmlspecialchars($match['score1']); ?></p>
+            <div class="col-md-4 col-lg-2 mb-4" style="width: 50%">
+                <div class="card-matches">
+                    <div class="card-header">Match ID: <?php echo htmlspecialchars($match['matchID']); ?></div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <p>Team: <?php echo htmlspecialchars($match['team1Name']); ?></p>
+                                    <p>ID: <?php echo htmlspecialchars($match['team1ID']); ?></p>
+                                </div>
+                                <div class="col-md-4" >
+                                    <div class="text-center">
+                                        <p>Date: <?php echo htmlspecialchars($match['matchDate']); ?></p>
+                                        <p>Final Score: <?php echo htmlspecialchars($match['finalScore']); ?></p>
+                                        <p>- Winner -</p>
+                                        <p style="font-weight:bold"><?php echo htmlspecialchars($match['winnerTeamName']); ?></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>Team: <?php echo htmlspecialchars($match['team2Name']); ?></p>
+                                    <p>ID: <?php echo htmlspecialchars($match['team2ID']); ?></p>
+                                </div>
                             </div>
-
-                            <div class="col-md-4 text-center">
-                                <p>Date: <?php echo htmlspecialchars($match['matchDate']); ?></p>
-                                <p>Final Score: <?php echo htmlspecialchars($match['finalScore']); ?></p>
-                                <p>Winner: <?php echo htmlspecialchars($match['winner']); ?></p>
                             </div>
-
-                            <div class="col-md-4">
-                                <p>Team 2: <?php echo htmlspecialchars($match['team2']); ?></p>
-                                <p>Score: <?php echo htmlspecialchars($match['score2']); ?></p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-center">No matches yet.</p>
+                <?php endif; ?>
+            </div>
         </div>
-        <?php else: ?>
-        <p class="text-center">No matches yet.</p>
-        <?php endif; ?>
     </section>
-
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
