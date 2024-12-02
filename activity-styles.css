@@ -1,8 +1,11 @@
-label { display: inline-block; } 
+label {
+  display: inline-block;
+}
 
-input, textarea {
-  display:inline-block;
-  font-family:arial;
+input,
+textarea {
+  display: inline-block;
+  font-family: arial;
   margin: 5px 10px 5px 40px;
   padding: 15px 12px 8px 12px;
   border: 1px solid #ccc;
@@ -12,35 +15,37 @@ input, textarea {
   font-size: small;
 }
 
-input[type=submit] {
-  padding: 10px 15px; 
-  border:0 none;
-  cursor:pointer;
-  border-radius: 5px; 
+input[type='submit'] {
+  padding: 10px 15px;
+  border: 0 none;
+  cursor: pointer;
+  border-radius: 5px;
   background-color: #5e43dd;
 }
-  
-input[type=submit]:hover {
+
+input[type='submit']:hover {
   background-color: #ccceee;
 }
-    
+
 .msg {
-  margin-left:24px;
+  margin-left: 24px;
   font-style: italic;
   color: red;
   font-size: 0.9em;
 }
-    
-html{ height:100%; }
 
-body { 
-  font-family: "Host Grotesk", sans-serif;
-  min-height:100%;
-  padding:0;
-  margin:0;
-  position:relative;
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Host Grotesk', sans-serif;
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
   padding-bottom: 8%;
-}    
+}
 
 .form {
   padding: 0;
@@ -50,8 +55,7 @@ body {
 
 p {
   text-align: left;
-  font-size: 1.5vw;
-  padding-left: 23%;
+  font-size: 1.2vw;
 }
 
 ::placeholder {
@@ -135,9 +139,9 @@ p {
 }
 
 .container {
-  display: flex; 
-  justify-content: space-between; 
-  flex-wrap: row; 
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: row;
   padding: 0;
   margin-left: 10%;
   margin-right: 10%;
@@ -182,7 +186,7 @@ p {
   margin-bottom: 5%;
   text-align: left;
   width: 100%;
-  background: url("./images/hero.png");
+  background: url('./images/hero.png');
   background-repeat: no-repeat;
   color: white;
   background-size: cover;
@@ -204,4 +208,30 @@ p {
 
 .form-section {
   padding: 5%;
+}
+
+.main {
+  display: flex;
+}
+
+.sidebar {
+  width: 25%;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ddd;
+}
+
+.main-content {
+  padding: 20px;
+  width: 75%;
+}
+
+.team-card,
+.trade-card,
+.player-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
 }

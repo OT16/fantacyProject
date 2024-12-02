@@ -2,7 +2,6 @@
 
 //Test this with: http://localhost/fantacyProject/teamdetails.php?teamID=1
 
-
 // Connect to the database
 
 include ("connect.php");
@@ -32,6 +31,9 @@ if ($teamID) {
         $player_result = $player_query->get_result();
     }
 }
+
+// add navbar bit
+include ("navbar.html");
 ?>
 
 <!DOCTYPE html>
@@ -40,33 +42,14 @@ if ($teamID) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Details</title>
-      <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-        .sidebar {
-            width: 25%;
-            padding: 20px;
-            background-color: #f4f4f4;
-            border-right: 1px solid #ddd;
-        }
-        .main-content {
-            padding: 20px;
-            width: 75%;
-        }
-        .player-card {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-    </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Inconsolata:wght@200..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="activity-styles.css" /> 		
 </head>
 <body>
+    <div class="main">
     <?php if ($team_data): ?>
         <div class="sidebar">
             <h3>Team Stats</h3>
@@ -102,5 +85,6 @@ if ($teamID) {
     $player_query->close();
     $conn->close();
     ?>
+    </div>
 </body>
 </html>
