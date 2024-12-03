@@ -113,7 +113,7 @@ include ("navbar.html");
                 </div>
                 <div class="card-footer text-muted">
                   <div class="select">
-                    <a href="league.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">Details</a>
+                    <a href="league.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">See details</a>
                   </div>
                 </div>
               </div>

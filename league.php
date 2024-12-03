@@ -198,9 +198,11 @@ include ("navbar.html");
                                 <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player['fantasyPoints']); ?></p>
                                 <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availabilityStatus']); ?></p>
                             </div>
+                                                        <div class="card-footer text-muted">
                             <div class="select">
                                 <a href="playerdetails.php?playerID=<?php echo $player['playerID']; ?>" class="btn btn-primary">See Player Statistics</a>
                             </div>
+                </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -211,11 +213,15 @@ include ("navbar.html");
     <?php endif; ?>
 </section>
 
-
-    <div class="browse-more">
-        <a href="leaguemanagement.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">Manage League</a>
-    </div>
-
+    <section style="display:flex; gap: 140px;">
+        <h2 class="category">
+        Manage League
+        </h2>
+<p> View teams, see league details, and delete this league </p>
+        <div class="select">
+            <a href="leaguemanagement.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">Manage League</a>
+        </div>
+    </section>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

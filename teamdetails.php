@@ -57,9 +57,8 @@ include ("navbar.html");
     <div class="main">
     <?php if ($team_data): ?>
         <div class="sidebar">
-            <h3>Team Stats</h3>
+            <h3>Team: <br> <?php echo htmlspecialchars($team_data['teamName']); ?></h3>
             <p><strong>Team ID:</strong> <?php echo htmlspecialchars($team_data['teamID']); ?></p>
-            <p><strong>Team Name:</strong> <?php echo htmlspecialchars($team_data['teamName']); ?></p>
             <p><strong>League ID:</strong> <?php echo htmlspecialchars($team_data['leagueID']); ?></p>
             <p><strong>Total Points:</strong> <?php echo htmlspecialchars($team_data['totalPoints']); ?></p>
             <p><strong>Ranking:</strong> <?php echo htmlspecialchars($team_data['ranking']); ?></p>
@@ -70,19 +69,17 @@ include ("navbar.html");
             <h3><br>Players</h3>
             <?php while ($player = $player_result->fetch_assoc()): ?>
                 <div class="player-card">
-                    <p><strong>Player ID:</strong> <?php echo htmlspecialchars($player['playerID']); ?></p>
                     <p><strong>Full Name:</strong> <?php echo htmlspecialchars($player['fullName']); ?></p>
+                    <p><strong>Player ID:</strong> <?php echo htmlspecialchars($player['playerID']); ?></p>
                     <p><strong>Sport:</strong> <?php echo htmlspecialchars($player['sport']); ?></p>
                     <p><strong>Position:</strong> <?php echo htmlspecialchars($player['position']); ?></p>
                     <p><strong>Real Team:</strong> <?php echo htmlspecialchars($player['realTeam']); ?></p>
                     <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player['fantasyPoints']); ?></p>
-<<<<<<< HEAD
-                    <div class="select">
-                        <a href="playerdetails.php?playerID=<?php echo $player['playerID']; ?>" class="btn btn-primary">See Player Statistics</a>
+                    <div class="card-footer text-muted">
+                        <div class="select">
+                            <a href="playerdetails.php?playerID=<?php echo $player['playerID']; ?>" class="btn btn-primary">See Player Statistics</a>
+                        </div>
                     </div>
-=======
-                    <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availabilityStatus']); ?></p>
->>>>>>> 7b3ef1931b48d64ad7fd8e67de7790c59fc8b7dd
                 </div>
                 
             <?php endwhile; ?>

@@ -45,7 +45,7 @@ include("navbar.html");
             <div class="player-details">
                 <h3>Player Statistics</h3>
                 <?php foreach ($player_stats_data as $stat): ?>
-                    <div class="stat-card">
+                    <div class="player-card">
                         <p><strong>Game Date:</strong> <?php echo htmlspecialchars($stat['gameDate']); ?></p>
                         <p><strong>Performance Stats:</strong> <?php echo htmlspecialchars($stat['performanceStats']); ?></p>
                         <p><strong>Injury Status:</strong> <?php echo htmlspecialchars($stat['injuryStatus']); ?></p>
@@ -58,7 +58,14 @@ include("navbar.html");
             </div>
         <?php endif; ?>
 
+
+        <div class="select">
+            <a href="home.php" class="btn btn-primary">Back to Home</a>
+        </div>
+        
         <?php
+
+
         // Close connections
         $player_name_query->close();
         $player_stats_query->close();

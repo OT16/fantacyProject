@@ -38,7 +38,7 @@ include("navbar.html");
     <div class="hero">
         <h1>All Drafts</h1>
     </div>
-    <div class="main container mt-4">
+    <div class="main mt-2">
         
         <?php if (!empty($drafts)): ?>
             <div class="row">
