@@ -168,12 +168,6 @@ include ("navbar.html");
             <button type="submit" name="players_csv" class="btn btn-success">Download Players</button>
         </form>
 
-
-        <br>
-        <h4>Model Bonus Points Scenario</h4>
-        Input field for how many bonus points to award
-        submit button
-        here, echo display the result of the called functiom
     </div>
 
 
