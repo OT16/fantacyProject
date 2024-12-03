@@ -21,14 +21,20 @@ if ($result && mysqli_num_rows($result) > 0) {
 
 // change
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    echo $fullName;
-    echo $username;
+
     $newFullName = mysqli_real_escape_string($conn, $_POST['fullName']);
     $newEmail = mysqli_real_escape_string($conn, $_POST['email']);
-    echo $newFullName ;
-    echo $newEmail;
+
     $updateSql = "UPDATE users SET fullName = '$newFullName', email = '$newEmail' WHERE username = '$username'";
+    // Execute the query
     $updateSqlResult = $conn->query($updateSql);
+
+    // Check if the query was successful
+    // if ($updateSqlResult) {
+    //     echo "Update successful!";
+    // } else {
+    //     echo "Error updating record: " . $conn->error;
+    // }
 }
 
 ?>
