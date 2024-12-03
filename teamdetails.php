@@ -32,38 +32,6 @@ if ($teamID) {
     }
 }
 
-$action = $_POST['action'];
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'];
-
-    if ($action === 'add') {
-        $fullName = $_POST['fullName'];
-        $sport = $_POST['sport'];
-        $position = $_POST['position'];
-        $realTeam = $_POST['realTeam'];
-
-        $query = $conn->prepare("INSERT INTO players (fullName, sport, position, realTeam) VALUES (?, ?, ?, ?)");
-        $query->bind_param("ssss", $fullName, $sport, $position, $realTeam);
-        $query->execute();
-    } elseif ($action === 'update') {
-        $playerID = $_POST['playerID'];
-        $fullName = $_POST['fullName'];
-        $fantasyPoints = $_POST['fantasyPoints'];
-
-        $query = $conn->prepare("UPDATE players SET fullName = ?, fantasyPoints = ? WHERE playerID = ?");
-        $query->bind_param("sii", $fullName, $fantasyPoints, $playerID);
-        $query->execute();
-    } elseif ($action === 'delete') {
-        $playerID = $_POST['playerID'];
-
-        $query = $conn->prepare("DELETE FROM players WHERE playerID = ?");
-        $query->bind_param("i", $playerID);
-        $query->execute();
-    }
-}
-
 
 // add navbar bit
 include ("navbar.html");
@@ -101,13 +69,6 @@ include ("navbar.html");
             </div>
         </div>
         <div class="main-content">
-
-                    <div class="action-buttons">
-                <!-- Trigger buttons for modals -->
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPlayerModal">Add Player</button>
-                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updatePlayerModal">Update Player</button>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePlayerModal">Delete Player</button>
-            </div>
             <h3><br>Players</h3>
             <?php while ($player = $player_result->fetch_assoc()): ?>
                 <div class="player-card">

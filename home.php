@@ -4,6 +4,11 @@ include 'connect.php';
 
 $status = "";
 
+if (!isset($_SESSION['username'])) {
+    header("Location: login.html");
+    exit();
+}
+
 $username = $_SESSION['username'];
 $sqlUser = "SELECT userID, fullName FROM users WHERE username = '$username'";
 $resultUser = mysqli_query($conn, $sqlUser);
@@ -33,23 +38,32 @@ if ($resultUserLeagues && mysqli_num_rows($resultUserLeagues) > 0) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $leagueName = $_POST['leagueName'];
-    $leagueType = $_POST['leagueType'];
-    $maxTeams = (int)$_POST['maxTeams'];
-    $draftDate = $_POST['draftDate'];
+  $leagueName = $_POST['leagueName'];
+  $leagueType = $_POST['leagueType'];
+  $maxTeams = (int)$_POST['maxTeams'];
+  $draftDate = $_POST['draftDate'];
 
-    do { // need to get the leagueID to be unique
-        $leagueID = random_int(10000000, 99999999);
-        $sqlCheck = "SELECT COUNT(*) AS count FROM leagues WHERE leagueID = '$leagueID'";
-        $resultCheck = mysqli_query($conn, $sqlCheck);
-        $row = mysqli_fetch_assoc($resultCheck);
-    } while ($row['count'] > 0);
+  do { // need to get the leagueID to be unique
+      $leagueID = random_int(10000000, 99999999);
+      $sqlCheck = "SELECT COUNT(*) AS count FROM leagues WHERE leagueID = '$leagueID'";
+      $resultCheck = mysqli_query($conn, $sqlCheck);
+      $row = mysqli_fetch_assoc($resultCheck);
+  } while ($row['count'] > 0);
 
-    if (!empty($leagueName) && in_array($leagueType, ['P', 'R']) && $maxTeams > 0 && $maxTeams <= 99 && !empty($draftDate)) {
-        $sql = "INSERT INTO leagues (leagueID, leagueName, leagueType, commissioner, maxTeams, draftDate)
-                VALUES ('$leagueID', '$leagueName', '$leagueType', '$userID', '$maxTeams', '$draftDate')";
-    }
+  if (!empty($leagueName) && in_array($leagueType, ['P', 'R']) && $maxTeams > 0 && $maxTeams <= 99 && !empty($draftDate)) {
+      $sql = "INSERT INTO leagues (leagueID, leagueName, leagueType, commissioner, maxTeams, draftDate)
+              VALUES ('$leagueID', '$leagueName', '$leagueType', '$userID', '$maxTeams', '$draftDate')";
+
+      if (mysqli_query($conn, $sql)) {
+          $status = "League created successfully!";
+          header("Location: home.php");
+          exit();
+      } else {
+          $status = "Error creating league: " . mysqli_error($conn);
+      }
+  }
 }
+
 
 if (isset($_GET['leagueID'])) {
     $leagueID = $_GET['leagueID'];
@@ -71,8 +85,6 @@ include ("navbar.html");
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-
   <div class="hero">
     <h1>Welcome, 
       <?php echo $fullName; ?>!</h1>
@@ -113,9 +125,7 @@ include ("navbar.html");
       </div>
     </div>
 
-    <div class="browse-more">
-            <a href="leaguemanagement.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">Manage League</a>
-        </div>
+
   </section>
 
   <section id="create-league" class="py-5">
@@ -158,9 +168,6 @@ include ("navbar.html");
         </div>
     </div>
 </section>
-
-
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

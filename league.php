@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('connect.php');
+include 'connect.php';
 
 if (!isset($_SESSION['username'])) { 
     header("Location: login.html");
@@ -45,9 +45,6 @@ if ($resultTeams && mysqli_num_rows($resultTeams) > 0) {
         $teams[] = $rowTeam;
         $teamIDs[] = $rowTeam['teamID'];
     }
-} else {
-    echo "League not found.";
-    exit();
 }
 
 if (!empty($teamIDs)) {
@@ -74,9 +71,6 @@ if (!empty($teamIDs)) {
             $matches[] = $rowMatch;
         }
     }
-} else {
-    echo "League not found.";
-    exit();
 }
 
 $sqlAvailablePlayers = "
@@ -92,6 +86,7 @@ if ($resultAvailablePlayers && mysqli_num_rows($resultAvailablePlayers) > 0) {
     }
 }
 
+include ("navbar.html");
 ?>
 
 <!DOCTYPE html>
@@ -105,27 +100,6 @@ if ($resultAvailablePlayers && mysqli_num_rows($resultAvailablePlayers) > 0) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <!-- Navigation Bar -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container-fluid">
-		  <a class="navbar-brand" href="#">
-			<img src="./images/logo.png" style="height: 50px;">
-		  </a>
-		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
-		  <div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav ms-auto">
-			  <li class="nav-item">
-				<a class="nav-link active" href="home.php">Home</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="profile.php">Profile</a>
-			  </li>
-			</ul>
-		  </div>
-		</div>
-	  </nav>
 
     <div class="hero">
         <h1><?php echo htmlspecialchars($league['leagueName']); ?></h1>
@@ -160,7 +134,6 @@ if ($resultAvailablePlayers && mysqli_num_rows($resultAvailablePlayers) > 0) {
             <p class="text-center">No teams in this league.</p>
         <?php endif; ?>
 
-        
     </section>
 
     <section id="contests" class="py-5">
@@ -199,11 +172,12 @@ if ($resultAvailablePlayers && mysqli_num_rows($resultAvailablePlayers) > 0) {
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p class="text-center">No matches yet.</p>
+                   
                 <?php endif; ?>
             </div>
         </div>
     </section>
+
 
     <section id="waiver-pool" class="py-5">
     <h2 class="category">Waiver Pool</h2>
@@ -236,6 +210,11 @@ if ($resultAvailablePlayers && mysqli_num_rows($resultAvailablePlayers) > 0) {
         <p class="text-center">No players available in the waiver pool.</p>
     <?php endif; ?>
 </section>
+
+
+    <div class="browse-more">
+        <a href="leaguemanagement.php?leagueID=<?php echo $league['leagueID']; ?>" class="btn btn-primary">Manage League</a>
+    </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
