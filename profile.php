@@ -63,9 +63,10 @@ include ('navbar.html');
 			<form class="login-form" action="" method="post">
 
 					<h5>Change profile fields.</h5>
+										<br>
 					<p>Enter name</p>
 					<input type="text" id="fullName" name="fullName" placeholder="Full Name" value="" required>
-
+					<br>
 					<p>Enter email</p>
 					<input type="email" id="email" name="email"  placeholder="Email" value="" required>
 
@@ -75,6 +76,14 @@ include ('navbar.html');
 
 
 			</form>
+								<br>
+		<h3>Log out</h3>
+							<br>
+		<div class="">
+            <a href="logout.php" class="btn btn-primary">Log out</a>
+        </div>
+
+
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     
