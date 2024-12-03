@@ -1,28 +1,14 @@
 <?php
-
 // LOCALHOST VERSION
 $servname = "localhost";
 $username = "root";
 $password = "";
 $dbname = "fantasy_db";
-// database connection
-$conn = mysqli_connect($servname, $username, $password, $dbname);
-if(!$conn){
-echo "Connection failed";
+$socket = "/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock"; // Ensure the socket path is correct
+
+// Database connection
+$conn = mysqli_connect($servname, $username, $password, $dbname, null, $socket);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
-// CLOUD VERSION
-// $servername = "127.0.0.1"; // Localhost because we're using an SSH tunnel
-// $username = "root"; // Cloud SQL username
-// $password = ""; // Cloud SQL password
-// $dbname = "fantasy_db"; // Database name
-// $port = 3306; // The port Cloud SQL proxy is listening on
-
-// // Create connection using mysqli
-// $conn = new mysqli($servername, $username, $password, $dbname, $port);
-// session_start(); // Start session if not already started -->
-
-// // Check the connection
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// }
 ?>
