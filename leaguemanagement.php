@@ -40,7 +40,11 @@ include ("navbar.html");
 	<link rel="stylesheet" href="activity-styles.css" /> 		
 </head>
 <body>
+                <div class="hero">
+        <h1>League Management</h1>
+    </div>
     <div class="main">
+
     <?php if ($league_data): ?>
         <div class="sidebar">
             <h3>League Details</h3>

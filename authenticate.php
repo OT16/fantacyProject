@@ -1,39 +1,56 @@
 <?php
-session_start();
-include "connect.php"; // Ensure this file defines $conn
+// authenticate.php
+include('connect.php'); // This includes your database connection
 
-// Check if form is submitted
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get the values from the form and sanitize
-    $un = mysqli_real_escape_string($conn, $_POST['uname']);
-    $pass = $_POST['pwd'];
+// Check if the form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the form data
+    $username = $_POST['uname'];
+    $password = $_POST['pwd'];
 
-    // Use prepared statement to prevent SQL injection
-    $sql = "SELECT * FROM users WHERE username = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $un); // 's' denotes string type for $un
+    // Validate the username and password against the database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    // If user exists, check password
+    if ($result->num_rows > 0) {
 
-    // Execute the query
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+        $row = $result->fetch_assoc();
 
-    if ($result && mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
 
-        // Direct password comparison (not recommended)
-        if ($pass == $row['password']) {  // Directly compare the passwords
-            echo "Logged in";
-            $_SESSION['username'] = $un; // Set session variable
-            header("Location: home.php"); // Redirect to home page
-            exit();
+        // Verify the password
+
+        //For hashing: (password_verify($password, $row['password'])) {
+
+        if ($password == $row['password']) {
+            session_start();
+            $_SESSION['username'] = $username;
+            $_SESSION['fullName'] = $row['fullName'];
+
+
+
+            $profileSettings = json_decode($row['profileSettings'], true); // Decode JSON to an associative array
+            if (isset($profileSettings['isDeveloper']) && $profileSettings['isDeveloper'] === true) {
+                // If isDeveloper is true, do something
+                // User is a developer, can export data
+                header("Location: devhome.php");
+            } else {
+                // echo "User is not a developer.";
+                header("Location: home.php");
+                exit();
+            }
+   
+            // Password is correct, set session and redirect to home.php
+
         } else {
-            echo "Incorrect username or password"; // Password mismatch
-            exit();
+            // Incorrect password
+            echo "Invalid username or password";
         }
     } else {
-        echo "No User Found :("; // No matching user
-        exit();
+        // User doesn't exist
+        echo "User does not exist";
     }
 }
-
 ?>

@@ -43,7 +43,11 @@ include ("navbar.html");
 	<link rel="stylesheet" href="activity-styles.css" /> 		
 </head>
 <body>
+                <div class="hero">
+        <h1>Draft Interface</h1>
+    </div>
     <div class="main">
+
     <?php if ($draft_data): ?>
         <div class="sidebar">
             <h3>Draft Details</h3>

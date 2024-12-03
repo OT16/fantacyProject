@@ -32,6 +32,39 @@ if ($teamID) {
     }
 }
 
+$action = $_POST['action'];
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'];
+
+    if ($action === 'add') {
+        $fullName = $_POST['fullName'];
+        $sport = $_POST['sport'];
+        $position = $_POST['position'];
+        $realTeam = $_POST['realTeam'];
+
+        $query = $conn->prepare("INSERT INTO players (fullName, sport, position, realTeam) VALUES (?, ?, ?, ?)");
+        $query->bind_param("ssss", $fullName, $sport, $position, $realTeam);
+        $query->execute();
+    } elseif ($action === 'update') {
+        $playerID = $_POST['playerID'];
+        $fullName = $_POST['fullName'];
+        $fantasyPoints = $_POST['fantasyPoints'];
+
+        $query = $conn->prepare("UPDATE players SET fullName = ?, fantasyPoints = ? WHERE playerID = ?");
+        $query->bind_param("sii", $fullName, $fantasyPoints, $playerID);
+        $query->execute();
+    } elseif ($action === 'delete') {
+        $playerID = $_POST['playerID'];
+
+        $query = $conn->prepare("DELETE FROM players WHERE playerID = ?");
+        $query->bind_param("i", $playerID);
+        $query->execute();
+    }
+}
+
+
 // add navbar bit
 include ("navbar.html");
 ?>
@@ -43,12 +76,16 @@ include ("navbar.html");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Details</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Inconsolata:wght@200..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="activity-styles.css" /> 		
 </head>
 <body>
+                <div class="hero">
+        <h1>Team Details</h1>
+    </div>
     <div class="main">
     <?php if ($team_data): ?>
         <div class="sidebar">
@@ -64,7 +101,14 @@ include ("navbar.html");
             </div>
         </div>
         <div class="main-content">
-            <h3>Players</h3>
+
+                    <div class="action-buttons">
+                <!-- Trigger buttons for modals -->
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPlayerModal">Add Player</button>
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updatePlayerModal">Update Player</button>
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePlayerModal">Delete Player</button>
+            </div>
+            <h3><br>Players</h3>
             <?php while ($player = $player_result->fetch_assoc()): ?>
                 <div class="player-card">
                     <p><strong>Player ID:</strong> <?php echo htmlspecialchars($player['playerID']); ?></p>
@@ -88,6 +132,101 @@ include ("navbar.html");
     $player_query->close();
     $conn->close();
     ?>
+    </div>
+
+
+
+    <!-- Modals -->
+    <!-- Add Player Modal -->
+    <div class="modal fade" id="addPlayerModal" tabindex="-1" aria-labelledby="addPlayerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPlayerModalLabel">Add Player</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="action" value="add">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sport" class="form-label">Sport</label>
+                            <input type="text" class="form-control" id="sport" name="sport" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="position" class="form-label">Position</label>
+                            <input type="text" class="form-control" id="position" name="position" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="realTeam" class="form-label">Real Team</label>
+                            <input type="text" class="form-control" id="realTeam" name="realTeam" value="<?php echo htmlspecialchars($team_data['teamName']); ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Add Player</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Player Modal -->
+    <div class="modal fade" id="updatePlayerModal" tabindex="-1" aria-labelledby="updatePlayerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updatePlayerModalLabel">Update Player</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="action" value="update">
+                        <div class="mb-3">
+                            <label for="playerID" class="form-label">Player ID</label>
+                            <input type="text" class="form-control" id="playerID" name="playerID" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fantasyPoints" class="form-label">Fantasy Points</label>
+                            <input type="text" class="form-control" id="fantasyPoints" name="fantasyPoints" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning">Update Player</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Player Modal -->
+    <div class="modal fade" id="deletePlayerModal" tabindex="-1" aria-labelledby="deletePlayerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deletePlayerModalLabel">Delete Player</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="action" value="delete">
+                        <div class="mb-3">
+                            <label for="playerID" class="form-label">Player ID</label>
+                            <input type="text" class="form-control" id="playerID" name="playerID" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Delete Player</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>

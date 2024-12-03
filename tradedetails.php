@@ -62,6 +62,9 @@ include ("navbar.html");
 	<link rel="stylesheet" href="activity-styles.css" /> 		
 </head>
 <body>
+        <div class="hero">
+        <h1>Trade Details</h1>
+    </div>
     <div class="main">
     <?php if ($trade_data): ?>
         <div class="sidebar">
