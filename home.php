@@ -4,10 +4,11 @@ include 'connect.php';
 
 $status = "";
 
+// Check if user is logged in
 if (!isset($_SESSION['username'])) {
-    header("Location: login.html");
-    exit();
+    die('You need to be logged in to use this page.');
 }
+
 
 $username = $_SESSION['username'];
 $sqlUser = "SELECT userID, fullName FROM users WHERE username = '$username'";
@@ -97,10 +98,9 @@ include ("navbar.html");
     </h2>
 
     <div class="container">
-      <div class="row">
         <?php if (!empty($userLeagues)): ?>
           <?php foreach ($userLeagues as $league): ?>
-            <div class="col-md-4 col-lg-2 mb-4">
+
               <div class="card">
                 <div class="card-header">
                   <?php echo htmlspecialchars($league['leagueName']); ?>
@@ -117,12 +117,10 @@ include ("navbar.html");
                   </div>
                 </div>
               </div>
-            </div>
           <?php endforeach; ?>
         <?php else: ?>
           <p class="text-center">You are not managing any leagues yet.</p>
         <?php endif; ?>
-      </div>
     </div>
 
 
