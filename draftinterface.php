@@ -46,12 +46,12 @@ include("navbar.html");
                     <div class="col-md-4 col-lg-3 mb-4">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Draft ID: <?php echo htmlspecialchars($draft['draftID']); ?></h5>
+                                <h5>Draft ID: <?php echo $draft['draftID']; ?></h5>
                             </div>
                             <div class="card-body">
-                                <p><strong>Draft Date:</strong> <?php echo htmlspecialchars($draft['draftDate']); ?></p>
-                                <p><strong>Draft Order:</strong> <?php echo htmlspecialchars($draft['draftOrder']); ?></p>
-                                <p><strong>Draft Status:</strong> <?php echo htmlspecialchars($draft['draftStatus']); ?></p>
+                                <p><strong>Draft Date:</strong> <?php echo ($draft['draftDate']); ?></p>
+                                <p><strong>Draft Order:</strong> <?php echo ($draft['draftOrder']); ?></p>
+                                <p><strong>Draft Status:</strong> <?php echo $draft['draftStatus']; ?></p>
                             </div>
                         </div>
                     </div>

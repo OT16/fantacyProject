@@ -71,10 +71,12 @@ p {
 
 .btn {
   color: white;
+  text-align: left;
 }
 
 .btn-primary btn {
   color: #5e43dd;
+  text-align: left;
 }
 
 .btn-link {
@@ -219,7 +221,7 @@ p {
 }
 
 .select {
-  text-align: center;
+  text-align: left;
 }
 
 .form-section {
