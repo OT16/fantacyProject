@@ -78,7 +78,7 @@ include ("navbar.html");
                     <p><strong>Position:</strong> <?php echo htmlspecialchars($player['position']); ?></p>
                     <p><strong>Real Team:</strong> <?php echo htmlspecialchars($player['realTeam']); ?></p>
                     <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player['fantasyPoints']); ?></p>
-                    <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availability']); ?></p>
+                    <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availabilityStatus']); ?></p>
                 </div>
             <?php endwhile; ?>
         </div>
