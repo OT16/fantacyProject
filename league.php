@@ -12,81 +12,83 @@ if (!isset($_GET['leagueID'])) {
     exit();
 }
 
-// user info
 $username = $_SESSION['username'];
-$sqlUser = "SELECT userID, fullName FROM users WHERE username = '$username'";
-$resultUser = mysqli_query($conn, $sqlUser);
+$sqlUser = "SELECT userID, fullName FROM users WHERE username = ?";
+$stmtUser = $conn->prepare($sqlUser);
+$stmtUser->bind_param("s", $username);
+$stmtUser->execute();
+$resultUser = $stmtUser->get_result();
 
-if ($resultUser && mysqli_num_rows($resultUser) > 0) {
-    $rowUser = mysqli_fetch_assoc($resultUser);
+if ($resultUser && $resultUser->num_rows > 0) {
+    $rowUser = $resultUser->fetch_assoc();
     $userID = $rowUser['userID'];
     $fullName = $rowUser['fullName'];
+} else {
+    echo "User not found.";
+    exit();
 }
 
-// leagues
 $leagueID = $_GET['leagueID'];
-$sqlLeague = "SELECT * FROM leagues WHERE leagueID = '$leagueID'";
-$resultLeague = mysqli_query($conn, $sqlLeague);
+$sqlLeague = "SELECT * FROM leagues WHERE leagueID = ?";
+$stmtLeague = $conn->prepare($sqlLeague);
+$stmtLeague->bind_param("s", $leagueID);
+$stmtLeague->execute();
+$resultLeague = $stmtLeague->get_result();
 
-if ($resultLeague && mysqli_num_rows($resultLeague) > 0) {
-    $league = mysqli_fetch_assoc($resultLeague);
+if ($resultLeague && $resultLeague->num_rows > 0) {
+    $league = $resultLeague->fetch_assoc();
 } else {
     echo "League not found.";
     exit();
 }
 
-// get all teams
-$sqlTeams = "SELECT * FROM teams WHERE leagueID = '$leagueID'";
-$resultTeams = mysqli_query($conn, $sqlTeams);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $teamName = trim($_POST['teamName']);
+    $totalPoints = 0;
+    $ranking = 100;
+    $status = 'A';
 
-$teamIDs = [];
-if ($resultTeams && mysqli_num_rows($resultTeams) > 0) {
-    while ($rowTeam = mysqli_fetch_assoc($resultTeams)) {
-        $teams[] = $rowTeam;
-        $teamIDs[] = $rowTeam['teamID'];
-    }
-}
+    if (!empty($teamName)) {
+        do {
+            $teamID = random_int(10000000, 99999999);
+            $sqlCheck = "SELECT COUNT(*) AS count FROM teams WHERE teamID = ?";
+            $stmtCheck = $conn->prepare($sqlCheck);
+            $stmtCheck->bind_param("s", $teamID);
+            $stmtCheck->execute();
+            $resultCheck = $stmtCheck->get_result();
+            $row = $resultCheck->fetch_assoc();
+        } while ($row['count'] > 0);
 
-if (!empty($teamIDs)) {
-    $teamIDsList = implode(',', array_map('intval', $teamIDs)); // Ensure safety with intval
+        $sqlInsertTeam = "INSERT INTO teams (teamID, teamName, owner, leagueID, totalPoints, ranking, status)
+                          VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmtInsert = $conn->prepare($sqlInsertTeam);
+        $stmtInsert->bind_param(
+            "sssiiss", 
+            $teamID, $teamName, $userID, $leagueID, 
+            $totalPoints, $ranking, $status
+        );
 
-    $sqlMatches = "
-    SELECT 
-        matches.*,
-        t1.teamName AS team1Name,
-        t2.teamName AS team2Name,
-        winnerTeams.teamName AS winnerTeamName
-    FROM matches
-        LEFT JOIN teams t1 ON matches.team1ID = t1.teamID
-        LEFT JOIN teams t2 ON matches.team2ID = t2.teamID
-        LEFT JOIN teams winnerTeams ON matches.winner = winnerTeams.teamID
-    WHERE matches.team1ID IN ($teamIDsList) 
-       OR matches.team2ID IN ($teamIDsList)";
-
-    $resultMatches = mysqli_query($conn, $sqlMatches);
-
-    $matches = [];
-    if ($resultMatches && mysqli_num_rows($resultMatches) > 0) {
-        while ($rowMatch = mysqli_fetch_assoc($resultMatches)) {
-            $matches[] = $rowMatch;
+        if ($stmtInsert->execute()) {
+            echo "Team created successfully!";
+            header("Location: league.php?leagueID=" . $leagueID);
+            exit();
+        } else {
+            echo "Error creating team: " . $conn->error;
         }
+    } else {
+        echo "Team name cannot be empty.";
     }
 }
 
-$sqlAvailablePlayers = "
-    SELECT playerID, fullName, sport, position, realTeam, fantasyPoints, availabilityStatus 
-    FROM players 
-    WHERE availabilityStatus = 'A'";
-$resultAvailablePlayers = mysqli_query($conn, $sqlAvailablePlayers);
+// Fetch teams in the league
+$sqlTeams = "SELECT * FROM teams WHERE leagueID = ?";
+$stmtTeams = $conn->prepare($sqlTeams);
+$stmtTeams->bind_param("i", $leagueID);
+$stmtTeams->execute();
+$resultTeams = $stmtTeams->get_result();
+$teams = $resultTeams->fetch_all(MYSQLI_ASSOC);
 
-$availablePlayers = [];
-if ($resultAvailablePlayers && mysqli_num_rows($resultAvailablePlayers) > 0) {
-    while ($rowPlayer = mysqli_fetch_assoc($resultAvailablePlayers)) {
-        $availablePlayers[] = $rowPlayer;
-    }
-}
-
-include ("navbar.html");
+include("navbar.html");
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +136,37 @@ include ("navbar.html");
             <p class="text-center">No teams in this league.</p>
         <?php endif; ?>
 
+        <section id="create-league" class="py-5">
+            <div class="container">
+                <div class="card" style="width: 35%;">
+                    <div class="card-body-submit">
+                    <form method="POST" action="">
+                        <div class="form-section">
+                        <h2 class="select">
+                            Create A New Team
+                        </h2>
+                        <br><br><br>
+                        <h5 class="select">
+                            Team Name
+                        </h5>
+                        <div class="select">
+                            <input type="text" id="teamName" name="teamName" maxlength="25" required>
+                        </div>
+                        </div>
+                        <div class="select">
+                            <br><br><br>
+                            <button type="submit" class="btn btn-primary">Create Team</button>
+                        </div>
+                    </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </section>
+
+
 
     <section id="contests" class="py-5">
     <h2 class="category">
