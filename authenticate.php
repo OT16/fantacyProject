@@ -19,10 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $row = $result->fetch_assoc();
 
-        // Verify the password
-        //For hashing: (password_verify($password, $row['password'])) {
+        // Hash a new password using SHA-256 when a user logs in
+        $hashed_password = hash('sha256', $password);
 
-        if ($password == $row['password']) {
+        if ($hashed_password == $row['password']) {
             session_start();
             $_SESSION['username'] = $username;
             $_SESSION['fullName'] = $row['fullName'];
@@ -37,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: home.php");
                 exit();
             }
-   
             // Password is correct, set session and redirect to home.php
 
         } else {
