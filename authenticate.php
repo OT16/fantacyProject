@@ -38,10 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             // Incorrect password
+            header("Location: register.php");
             echo "Invalid username or password";
         }
     } else {
         // User doesn't exist
+        header("Location: register.php");
+
         echo "User does not exist";
     }
 }
