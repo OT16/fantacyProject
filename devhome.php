@@ -7,7 +7,7 @@ include("connect.php");
 
 
 // Check if user is logged in
-if (!isset($_SESSION['username']) && $_SESSION['username'] === 'janesmith') {
+if ($_SESSION['username'] !== 'janesmith') {
     die('You need to be logged in as admin to use this page.');
 }
 
