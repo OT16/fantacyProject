@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
-$sql = "SELECT fullName FROM users WHERE username = '$username'";
+$sql = "SELECT fullName, email FROM users WHERE username = '$username'";
 $result = mysqli_query($conn, $sql);
 
 // get
