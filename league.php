@@ -198,9 +198,6 @@ include ("navbar.html");
                                 <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player['fantasyPoints']); ?></p>
                                 <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availabilityStatus']); ?></p>
                             </div>
-                            <div class="card-footer">
-                                <a href="claimPlayer.php?playerID=<?php echo $player['playerID']; ?>" class="btn btn-primary">Submit Claim</a>
-                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
