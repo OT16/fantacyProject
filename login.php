@@ -51,7 +51,7 @@ include("connect.php");
             required
           />
           <br />
-          <input type="submit" value="Login" class="btn login-form" action="authenticate.php" method="post" />
+          <input type="submit" value="Login" class="btn" action="authenticate.php" method="post" />
         </form>
         <p style="color: black">
           Don't have an account?

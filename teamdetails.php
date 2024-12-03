@@ -64,9 +64,7 @@ include ("navbar.html");
             <p><strong>Total Points:</strong> <?php echo htmlspecialchars($team_data['totalPoints']); ?></p>
             <p><strong>Ranking:</strong> <?php echo htmlspecialchars($team_data['ranking']); ?></p>
             <p><strong>Status:</strong> <?php echo htmlspecialchars($team_data['status']); ?></p>
-            <div class="select">
-                <a href="tradedetails.php" class="btn btn-primary">View Trades</a>
-            </div>
+
         </div>
         <div class="main-content">
             <h3><br>Players</h3>
@@ -78,9 +76,13 @@ include ("navbar.html");
                     <p><strong>Position:</strong> <?php echo htmlspecialchars($player['position']); ?></p>
                     <p><strong>Real Team:</strong> <?php echo htmlspecialchars($player['realTeam']); ?></p>
                     <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player['fantasyPoints']); ?></p>
-                    <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availability']); ?></p>
+                    <div class="select">
+                        <a href="playerdetails.php?playerID=<?php echo $player['playerID']; ?>" class="btn btn-primary">See Player Statistics</a>
+                    </div>
                 </div>
+                
             <?php endwhile; ?>
+
         </div>
     <?php else: ?>
         <div>

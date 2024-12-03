@@ -198,6 +198,9 @@ include ("navbar.html");
                                 <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player['fantasyPoints']); ?></p>
                                 <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availabilityStatus']); ?></p>
                             </div>
+                            <div class="select">
+                                <a href="playerdetails.php?playerID=<?php echo $player['playerID']; ?>" class="btn btn-primary">See Player Statistics</a>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
