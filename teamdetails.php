@@ -6,6 +6,14 @@
 
 include ("connect.php");
 
+
+// Check if user is logged in
+if (!isset($_SESSION['username'])) {
+    die('You need to be logged in to use this page.');
+}
+
+
+
 // Get team ID from the GET request
 $teamID = isset($_GET['teamID']) ? $_GET['teamID'] : null;
 

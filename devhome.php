@@ -2,13 +2,16 @@
 // Start session (if needed) to validate user or handle access control
 session_start();
 
-// Check if user is authorized (if necessary)
-if (!isset($_SESSION['username'])) {
-    die('You need to be logged in to use this page.');
-}
-
 // Include your database connection file
 include("connect.php");
+
+
+// Check if user is logged in
+if (!isset($_SESSION['username']) && $_SESSION['username'] === 'janesmith') {
+    die('You need to be logged in as admin to use this page.');
+}
+
+
 
 // Check if the form is submitted to download the CSV
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['leagues_csv'])) {

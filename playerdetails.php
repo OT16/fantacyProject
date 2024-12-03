@@ -3,6 +3,14 @@
 // Connect to the database
 include ("connect.php");
 
+
+// Check if user is logged in
+if (!isset($_SESSION['username'])) {
+    die('You need to be logged in to use this page.');
+}
+
+
+
 // Get playerID from the GET request
 $playerID = isset($_GET['playerID']) ? $_GET['playerID'] : null;
 

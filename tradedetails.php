@@ -3,6 +3,14 @@
 // Connect to the database
 include ("connect.php");
 
+
+// Check if user is logged in
+if (!isset($_SESSION['username'])) {
+    die('You need to be logged in to use this page.');
+}
+
+
+
 // Fetch all trades from the database
 $trades_query = $conn->prepare("SELECT * FROM trades");
 $trades_query->execute();

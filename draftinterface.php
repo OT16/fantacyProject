@@ -2,6 +2,14 @@
 // Connect to the database
 include("connect.php");
 
+
+// Check if user is logged in
+if (!isset($_SESSION['username'])) {
+    die('You need to be logged in to use this page.');
+}
+
+
+
 // Fetch all drafts
 $draft_query = $conn->prepare("SELECT * FROM drafts");
 $draft_query->execute();

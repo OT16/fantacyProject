@@ -2,6 +2,8 @@
 
 include('connect.php'); // This includes your database connection
 
+
+
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the form data
