@@ -19,43 +19,15 @@ if ($result && mysqli_num_rows($result) > 0) {
 	$email = $row['email'];
 }
 
-
+// change
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $newName = $_POST['fullName'];
-    $newEmail = $_POST['email'];
-    $password = $_POST['pwd'];
-
-    $sqlVerify = "SELECT userID, password FROM users WHERE username = ?";
-    $stmtVerify = mysqli_prepare($conn, $sqlVerify);
-    mysqli_stmt_bind_param($stmtVerify, "s", $username);
-    mysqli_stmt_execute($stmtVerify);
-    $resultVerify = mysqli_stmt_get_result($stmtVerify);
-
-    if ($resultVerify && mysqli_num_rows($resultVerify) > 0) {
-        $row = mysqli_fetch_assoc($resultVerify);
-
-        if (password_verify($password, $row['password'])) {
-            $userID = $row['userID'];
-            $sqlUpdate = "UPDATE users SET fullName = ?, email = ? WHERE userID = ?";
-            $stmtUpdate = mysqli_prepare($conn, $sqlUpdate);
-            mysqli_stmt_bind_param($stmtUpdate, "ssi", $newName, $newEmail, $userID);
-
-            if (mysqli_stmt_execute($stmtUpdate)) {
-                $status = "Profile updated successfully!";
-            } else {
-                $status = "Error updating profile: " . mysqli_error($conn);
-            }
-        } else {
-            $status = "Invalid password.";
-        }
-    } else {
-        $status = "Invalid username.";
-    }
+    $newFullName = mysqli_real_escape_string($conn, $_POST['fullName']);
+    $newEmail = mysqli_real_escape_string($conn, $_POST['email']);
+    $newOtherDetails = mysqli_real_escape_string($conn, $_POST['otherDetails']);
+    $updateSql = "UPDATE users SET fullName = '$newFullName', email = '$newEmail' WHERE username = '$username'";
 }
 
-// add navbar bit
-include ("navbar.html");
-
+include("navbar.html");
 ?>
 
 <!DOCTYPE html>
@@ -91,14 +63,7 @@ include ("navbar.html");
 
 					<p>Enter email</p>
 					<input type="email" id="email" name="email"" placeholder="Email" required>
-                    
-                    <br><br><br><br>                 
 
-					<h5>Confirm Username and password to save changes.</h5>
-                    <br>
-					<p>Password</p>
-					<input type="password" id="pwd "name="pwd" placeholder="Password"  required /> <br/>
-				
                     <div class="select">
                         <input type="submit" value="Save changes" class="btn"/>
                     </div>
