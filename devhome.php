@@ -68,7 +68,7 @@ include ("navbar.html");
       <?php echo $_SESSION['fullName']; ?>!</h1>
     </h1>
 </div>
-    <div class="container">
+    <div class="main-container">
         <h1>Developer Portal</h1>
         <!-- Form to trigger CSV download -->
         <form action="" method="post">

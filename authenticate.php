@@ -19,17 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $row = $result->fetch_assoc();
 
-
         // Verify the password
-
         //For hashing: (password_verify($password, $row['password'])) {
 
         if ($password == $row['password']) {
             session_start();
             $_SESSION['username'] = $username;
             $_SESSION['fullName'] = $row['fullName'];
-
-
 
             $profileSettings = json_decode($row['profileSettings'], true); // Decode JSON to an associative array
             if (isset($profileSettings['isDeveloper']) && $profileSettings['isDeveloper'] === true) {
