@@ -76,9 +76,13 @@ include ("navbar.html");
                     <p><strong>Position:</strong> <?php echo htmlspecialchars($player['position']); ?></p>
                     <p><strong>Real Team:</strong> <?php echo htmlspecialchars($player['realTeam']); ?></p>
                     <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player['fantasyPoints']); ?></p>
+<<<<<<< HEAD
                     <div class="select">
                         <a href="playerdetails.php?playerID=<?php echo $player['playerID']; ?>" class="btn btn-primary">See Player Statistics</a>
                     </div>
+=======
+                    <p><strong>Availability:</strong> <?php echo htmlspecialchars($player['availabilityStatus']); ?></p>
+>>>>>>> 7b3ef1931b48d64ad7fd8e67de7790c59fc8b7dd
                 </div>
                 
             <?php endwhile; ?>
