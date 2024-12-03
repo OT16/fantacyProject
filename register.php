@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['pwd'];
     $email = $_POST['email'];
 
+    // Hash a new password using SHA-256 when a user logs in
     $hashed_password = hash('sha256', $password);
 
     $userID = rand(11000020, 99999999); // Starting value

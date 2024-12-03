@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $profileSettings = json_decode($row['profileSettings'], true); // Decode JSON to an associative array
             if (isset($profileSettings['isDeveloper']) && $profileSettings['isDeveloper'] === true) {
-                // If isDeveloper is true, do something
                 // User is a developer, can export data
                 header("Location: devhome.php");
             } else {
@@ -37,8 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: home.php");
                 exit();
             }
-            // Password is correct, set session and redirect to home.php
-
         } else {
             // Incorrect password
             echo "Invalid username or password";

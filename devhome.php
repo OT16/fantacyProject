@@ -3,8 +3,8 @@
 session_start();
 
 // Check if user is authorized (if necessary)
-if (!isset($_SESSION['fullName'])) {
-    die('You need to be logged in to download the CSV.');
+if (!isset($_SESSION['username'])) {
+    die('You need to be logged in to use this page.');
 }
 
 // Include your database connection file
