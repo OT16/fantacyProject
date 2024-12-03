@@ -1,22 +1,48 @@
 <?php
-include "connect.php";
-// Get the values from the form
-$firstname = $_POST['fname'];
-$lastname = $_POST['lname'];
-$username = $_POST['uname'];
-$email = $_POST['email'];
-$password = $_POST['pwd'];
-// preparing and executing statment
-// EDIT NOT DONE *****
-$sql = "INSERT into users(userID, fullname, email, username, password)
-values('$firstname','$lastname','$username','$password')";
-$result = mysqli_query($conn, $sql);
-if($result){
-echo $firstname. " is registred succesfully!";
-}
-$conn->close();
-?>
 
+include('connect.php'); // This includes your database connection
+
+// Check if the form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the form data
+    $fullName = $_POST['fname'];
+    $username = $_POST['uname'];
+    $password = $_POST['pwd'];
+    $email = $_POST['email'];
+
+    $hashed_password = hash('sha256', $password);
+
+    $userID = rand(11000020, 99999999); // Starting value
+
+
+    // Prepare SQL query to insert the new user into the database
+    $sql = "INSERT INTO users (userID, fullName, username, password, email, profileSettings) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+
+    // Use prepared statements to prevent SQL injection
+    if ($stmt = $conn->prepare($sql)) {
+        // Set profileSettings to NULL
+        $profileSettings = '{"darkMode": true, "notifications": false}';
+
+        // Bind parameters to the statement
+        $stmt->bind_param("isssss", $userID, $fullName, $username, $hashed_password, $email, $profileSettings);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            echo "User successfully registered!";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        // Close the prepared statement
+        $stmt->close();
+    } else {
+        echo "Error preparing statement: " . $conn->error;
+    }
+
+}
+
+?>
 
 
 <!DOCTYPE html>
@@ -43,21 +69,13 @@ $conn->close();
 
     <div class="container">
       <div class="child1">
-        <h1 class="header">Register</h1>
-        <form class="form" action="register.php" method="post">
+        <h1 class="header">Register new account</h1>
+        <form class="login-form" action="register.php" method="post">
           <input
             type="text"
             id="fname"
             name="fname"
-            placeholder="First Name"
-            required
-          />
-          <br />
-          <input
-            type="text"
-            id="lname"
-            name="lname"
-            placeholder="Last Name"
+            placeholder="Full Name"
             required
           />
           <br />
@@ -69,6 +87,14 @@ $conn->close();
             required
           />
           <br />
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <br />
           <input
             type="password"
             id="pwd"
@@ -77,11 +103,12 @@ $conn->close();
             required
           />
           <br />
-          <input type="submit" value="Submit" class="btn" />
+          <input type="submit" value="Register" class="btn" action="" method="post" />
+
         </form>
         <p style="color: black">
           Have an account already?
-          <a href="login.html" class="btn-link">Login</a>
+          <a href="login.php" class="btn-link">Login</a>
         </p>
       </div>
 
@@ -90,11 +117,6 @@ $conn->close();
       </div>
     </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>
 

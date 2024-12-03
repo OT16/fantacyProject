@@ -53,9 +53,9 @@ include ("navbar.html");
 
 	<div class="container">
 		<div class="child1">
-			<h3 style="text-align: center;">Update Details</h3>
+			<h3 style="text-align: left;">Update Details</h3>
 			
-			<form class="form" action="profile.php" method="post">  
+			<form class="login-form" action="profile.php" method="post">  
 				<input type="text" id="uname" name="fullName" placeholder="Full Name" required>
 				<input type="email" id="email" name="email"" placeholder="Email" required>
 				<input type="submit" value="Save changes" class="btn"/>
@@ -63,7 +63,8 @@ include ("navbar.html");
 		</div>
 	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    
+	<div class="container">
+		<a href="logout.php" class="btn btn-primary">Logout</a>
+	</div>
 </body>
 </html>

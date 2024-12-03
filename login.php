@@ -4,7 +4,6 @@ session_start();
 
 // Include database connection
 include("connect.php");
-include ("navbar.html");
 
 ?>
 
@@ -57,10 +56,6 @@ include ("navbar.html");
         <p style="color: black">
           Don't have an account?
           <a href="register.php" class="btn-link">Register</a>
-        </p>
-		<p style="color: black">
-          Are  you a developer?
-          <a href="devlogin.php" class="btn-link">Log in here</a>
         </p>
       </div>
 
