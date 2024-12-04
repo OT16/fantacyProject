@@ -87,7 +87,7 @@ include ("navbar.html");
                         <p><strong>Position:</strong> <?php echo htmlspecialchars($player1_data['position']); ?></p>
                         <p><strong>Real Team:</strong> <?php echo htmlspecialchars($player1_data['realTeam']); ?></p>
                         <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player1_data['fantasyPoints']); ?></p>
-                        <p><strong>Availability:</strong> <?php echo htmlspecialchars($player1_data['availability']); ?></p>
+                        <p><strong>Availability:</strong> <?php echo htmlspecialchars($player1_data['availabilityStatus']); ?></p>
                     </div>
 
                     <div class="player-card">
@@ -97,7 +97,7 @@ include ("navbar.html");
                         <p><strong>Position:</strong> <?php echo htmlspecialchars($player2_data['position']); ?></p>
                         <p><strong>Real Team:</strong> <?php echo htmlspecialchars($player2_data['realTeam']); ?></p>
                         <p><strong>Fantasy Points:</strong> <?php echo htmlspecialchars($player2_data['fantasyPoints']); ?></p>
-                        <p><strong>Availability:</strong> <?php echo htmlspecialchars($player2_data['availability']); ?></p>
+                        <p><strong>Availability:</strong> <?php echo htmlspecialchars($player2_data['availabilityStatus']); ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
