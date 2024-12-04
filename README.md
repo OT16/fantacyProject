@@ -1,16 +1,5 @@
 Introduction to Databases Final Project
 
-To Setup:
-Open Terminal and run the following command
-./start.sh
-
-If ran correctly, it should open safari tab to login page
-
-Troubleshooting:
-Error: sudo: ./start.sh: command not found
-Solution: chmod +x start.sh
-
-
 Purpose:
 - Write program(s) to interact with the database
 - Implement all functionalities and necessary features to fulfill the project requirements
