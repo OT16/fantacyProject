@@ -23,8 +23,8 @@ Purpose:
 - Test and verify that your app works properly 
 
 Requirements: 
-- Write programs to interact with the database you designed and set up in previous milestones ● Implement all 
-functionalities and necessary features you proposed to fulfill the project requirements
+- Write programs to interact with the database you designed and set up in previous milestones
+- Implement all functionalities and necessary features you proposed to fulfill the project requirements
 - Include dynamic behaviors, where the front end (user interface) respond to user inputs or actions (or web services)
 and updates the screen (interface) accordingly 
 - Allow users to perform the following functionalities. It is important to note that these functionalities must be
