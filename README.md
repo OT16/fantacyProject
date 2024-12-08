@@ -1,9 +1,26 @@
 Introduction to Databases Final Project
 
+How to set up:
+Prerequisite:
+- MySql Database (fantasy_db)
+- Ngork Free Account (visit https://ngrok.com/)
+
+In terminal 1:
+Run: php -d memory_limit=-1 -S localhost:8080 -t /path/to/fantasyProject
+- This sets up a php server from the fantasyProject folder to localhost:8080
+
+In terminal 2:
+Run: ngrok http 8080
+OR
+Run: ngrok http http://localhost:8080
+- This allows you to put your app online at an ephemeral domain forwarding to your upstream service
+
+In terminal 2 you will be given a url like so -- https://####-###-###-##-###.ngrok-free.app . To see the full application search -- https://####-###-###-##-###.ngrok-free.app/login.php . 
+
 Purpose:
 - Write program(s) to interact with the database
 - Implement all functionalities and necessary features to fulfill the project requirements
-- Test and verify that your app works properly
+- Test and verify that your app works properly 
 
 Requirements: 
 - Write programs to interact with the database you designed and set up in previous milestones ● Implement all 
